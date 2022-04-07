@@ -31,7 +31,21 @@
 
 ### 2. configurate the connection
 
-> - temporarily in server.h
+> - config your database connection in config.json like following, and put the json file to the directory where the excutable is in
+
+```json
+{
+    "redis" : "tcp://127.0.0.1:6379",
+
+    "mysql" : {
+        "host" : "127.0.0.1",
+        "user" : "root",
+        "pwd" : "123456",
+        "dbname" : "youchatpro",
+        "connsize" : 10
+    }
+}
+```
 
 ## Compile and run
 

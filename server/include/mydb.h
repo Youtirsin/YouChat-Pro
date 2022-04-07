@@ -42,8 +42,8 @@ public:
         string host;
         string user;
         string pwd;
-        string dbName;
-        int connSize;
+        string dbname;
+        int connsize;
     };
 
     static SqlConnPool *Instance(const Config& config);

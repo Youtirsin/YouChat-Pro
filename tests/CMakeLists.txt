@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 aux_source_directory(src SRC)
-aux_source_directory(src/response SRC)
 
 add_executable(test test.cpp)
 

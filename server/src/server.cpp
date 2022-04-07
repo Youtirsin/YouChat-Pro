@@ -1,8 +1,8 @@
 #include "server.h"
 
-Server::Server(): 
+Server::Server(const SqlConnPool::Config& sqlconfig, const string& redisconn): 
     epoll(new Epoll(FD_NUM)), threadpool(new ThreadPool()),
-    dbapi(SQLConfig), redisapi(REDIS_CONN) {
+    dbapi(sqlconfig), redisapi(redisconn) {
 
     closed = false;
 

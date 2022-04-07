@@ -1,23 +1,34 @@
 #include <bits/stdc++.h>
-#include "sw/redis++/redis++.h"
+#include <fstream>
+#include "jsoncpp/json/json.h"
 using namespace std;
 
 
+class A {
+public:
+    void setd(int dd) { d = dd; }
+
+    const int& getd() const { 
+        cout << &d << endl;
+        return d;
+    }
+private:
+    int d;
+};
+
+void test(const int& d) {
+    cout << d << endl;
+    cout << &d << endl;
+}
+
+
 int main() {
-    auto redis = sw::redis::Redis("tcp://127.0.0.1:6379");
+    A a;
 
-    unordered_map<string, string> m = {
-        {"key1", "val1"},
-        {"key2", "val2"}
-    };
+    a.setd(12);
 
-    redis.hmset("key1", m.begin(), m.end());
-    redis.hmset("key2", m.begin(), m.end());
+    test(a.getd());
 
-    
-    redis.expire("key1", std::chrono::seconds(600));
-    redis.expire("key2", std::chrono::seconds(600));
-    
     return 0;
 }
 

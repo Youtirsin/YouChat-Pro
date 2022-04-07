@@ -25,7 +25,7 @@ using std::string;
 
 class Server {
 public:
-    Server();
+    Server(const SqlConnPool::Config& sqlconfig, const string& redisconn);
 
     void start();
 
@@ -36,17 +36,17 @@ private:
 
     static const int PORT = 10086;
 
-    // ------------ redis -------
-    const string REDIS_CONN = "tcp://127.0.0.1:6379";
+    // // ------------ redis -------
+    // const string REDIS_CONN = "tcp://127.0.0.1:6379";
 
-    // MySQL Configuration
-    const SqlConnPool::Config SQLConfig = {
-        "127.0.0.1",
-        "root",
-        "123456",
-        "youchatpro",
-        10
-    };
+    // // MySQL Configuration
+    // const SqlConnPool::Config SQLConfig = {
+    //     "127.0.0.1",
+    //     "root",
+    //     "123456",
+    //     "youchatpro",
+    //     10
+    // };
 
     static int setFdNonBlock(int fd);
     

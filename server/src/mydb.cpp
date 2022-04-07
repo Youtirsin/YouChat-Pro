@@ -102,14 +102,14 @@ SqlConnPool* SqlConnPool::Instance(const Config& config) {
 
 
 void SqlConnPool::init(const Config& config) {
-    for (int i = 0; i < config.connSize; i++) {
+    for (int i = 0; i < config.connsize; i++) {
         cout << "initing connection " << i << "...\n";
         DBMysqlConn *sql = new DBMysqlConn(config.host.c_str(), config.user.c_str(), 
-                            config.pwd.c_str(), config.dbName.c_str());
+                            config.pwd.c_str(), config.dbname.c_str());
         connQue_.push(sql);
     }
 
-    MAX_CONN_ = config.connSize;
+    MAX_CONN_ = config.connsize;
     sem_init(&semId_, 0, MAX_CONN_);
 }
 
