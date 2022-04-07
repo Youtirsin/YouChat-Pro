@@ -41,7 +41,17 @@ Linux下的C++即时通讯应用服务器。
 > - 按照下面的示例在config.json中配置，并将文件放置可执行文件目录
 
 ```json
+{
+    "redis" : "tcp://127.0.0.1:6379",
 
+    "mysql" : {
+        "host" : "127.0.0.1",
+        "user" : "root",
+        "pwd" : "123456",
+        "dbname" : "youchatpro",
+        "connsize" : 10
+    }
+}
 ```
 
 ### 编译和运行
