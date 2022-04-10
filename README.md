@@ -56,3 +56,13 @@ cd build && cmake ..
 ```
 
 ## Installation and deployment
+
+
+
+## To-do
+
+1. build a client desktop application with electron instead of pyqt
+
+2. server test
+
+3. installation and deployment of server

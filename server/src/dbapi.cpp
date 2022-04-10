@@ -58,43 +58,6 @@ shared_ptr<User> DBApi::getUserWithName(const string& username) {
 }
 
 
-// string DBApi::getPsd(const string& username) {
-//     SqlConnWrapper conn((SqlConnPool::Instance(config)));
-//     stringstream fmt;
-    
-//     fmt << "select password from user where username='" << username << "'";
-    
-//     auto res = conn.getConn()->db_select(fmt.str());
-
-//     if (res.size() == 0) { return ""; }
-
-//     return res[0][0];
-// }
-
-// int DBApi::getUserId(const string& username) {
-//     SqlConnWrapper conn((SqlConnPool::Instance(config)));
-//     stringstream fmt;
-
-//     fmt << "select id from user where username='" << username << "'";
-//     auto res = conn.getConn()->db_select(fmt.str());
-
-//     if (res.size() == 0) { return -1; }
-//     return stoi(res[0][0]);
-// }
-
-
-// string DBApi::getUsername(int id) {
-//     SqlConnWrapper conn((SqlConnPool::Instance(config)));
-//     stringstream fmt;
-
-//     fmt << "select username from user where id='" << id << "'";
-//     auto res = conn.getConn()->db_select(fmt.str());
-
-//     if (res.size() == 0) { return ""; }
-//     return res[0][0];
-// }
-
-
 bool DBApi::savePrivateMsg(int from_id, int to_id, const string& msg) {
     SqlConnWrapper conn((SqlConnPool::Instance(config)));
     stringstream fmt;

@@ -26,3 +26,9 @@ struct BroadcastMsg {
     string msg;
     string stamp;
 };
+
+
+struct Unread {
+    int id;
+    int num;
+};

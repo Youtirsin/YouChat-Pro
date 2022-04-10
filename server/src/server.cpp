@@ -288,9 +288,17 @@ void Server::broadcast(const string& request, ClientConn *client) {
 
     dbapi.saveBroadcastMsg(id, req.msg);
 
+    // save unread noti for the offline
+    std::unordered_set<int> allid = redisapi.getAllUserIds();
+
     for (auto &&fd : fd_to_userId) {
+        allid.erase(fd.second); // remove the online
         ClientConn * conn = conns[fd.first];
         threadpool->addTask(std::bind(&Server::write, this, conn, response));
+    }
+    
+    for (auto &&e : allid) {
+        redisapi.increUnreadBy(e, 0, 1); // add an unread of the broadcast
     }
     
     printf("done broadcasting.\n");
@@ -320,19 +328,33 @@ void Server::privateMsg(const string& request, ClientConn *client) {
     if (!req.load(request)) return;
     printf("request type: private, sending to %d.\n", req.to_id);
 
-    if (!userId_to_fd.count(req.to_id)) return;
+    bool target_online = true;
+    // sender id
+    int from_id = fd_to_userId[client->getFd()];
+
+    // target not online or not exists
+    if (!userId_to_fd.count(req.to_id)) {
+        // not exists
+        if (!redisapi.getUserWithId(req.to_id) && !dbapi.getUserWithId(req.to_id)) {
+            return;
+        }
+        target_online = false;
+
+        redisapi.increUnreadBy(from_id, req.to_id, 1);
+    }
+
     // load target connection
     int to_fd = userId_to_fd[req.to_id];
     ClientConn * toClient = conns[to_fd];
 
-    // send id
-    int from_id = fd_to_userId[client->getFd()];
-
+    // save msg
     dbapi.savePrivateMsg(from_id, req.to_id, req.msg);
 
-    PrivateRes res(from_id, req.to_id, req.msg, timestampnow());
-
-    threadpool->addTask(std::bind(&Server::write, this, toClient, res.dump()));
+    // send msg
+    if (target_online) {
+        PrivateRes res(from_id, req.to_id, req.msg, timestampnow());
+        threadpool->addTask(std::bind(&Server::write, this, toClient, res.dump()));
+    }
 }
 
 
@@ -344,8 +366,9 @@ void Server::loadPrivate(const string& request, ClientConn *client) {
     // from id
     int from_id = fd_to_userId[client->getFd()];
     
-    string res = dbapi.loadPrivateMsg(from_id, req.to_id, req.page, req.size);
+    redisapi.clearUnread(from_id, req.to_id); // clear unread notifications
 
+    string res = dbapi.loadPrivateMsg(from_id, req.to_id, req.page, req.size);
     threadpool->addTask(std::bind(&Server::write, this, client, res));
 }
 
@@ -356,8 +379,9 @@ void Server::loadBroadcast(const string& request, ClientConn *client) {
 
     // from id
     int from_id = fd_to_userId[client->getFd()];
+
+    redisapi.clearUnread(from_id, 0); // clear unread notifications
     
     string res = dbapi.loadBroadcastMsg(req.page, req.size);
-
     threadpool->addTask(std::bind(&Server::write, this, client, res));
 }

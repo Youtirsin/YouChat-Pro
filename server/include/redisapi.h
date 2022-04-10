@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "sw/redis++/redis++.h"
 
@@ -19,22 +20,33 @@ class RedisApi {
 public:
     RedisApi(const string& connection);
 
-    // bool saveUser(const string& username, const string& password);
     bool saveUser(const User& user);
+
+    std::unordered_set<int> getAllUserIds();
 
     shared_ptr<User> getUserWithId(int id);
 
     shared_ptr<User> getUserWithName(const string& username);
 
-    // string getUsernameWithId(int id);
+    std::vector<Unread> getAllUnreadWithId(int id);
 
-    // bool setUsernameWithId(int id, const string& name);
+    bool increUnreadBy(int keyid, int targetid, int num);
+
+    bool clearUnread(int keyid, int targetid);
 private:
     sw::redis::Redis redis;
 
+    // project prefix
     const string PROJECT_NAME = "youchatpro:";
 
-    const string USERID_TO_NAME = "usernameid:";
+    // business prefix
+    const string USER_BY_ID = "userbyid:"; // hash
+    const string USER_BY_NAME = "userbyname:"; // hash
+    const string UNREAD = "unread:"; // hash
+
+    // business name
+    const string ALL_USER_ID = "alluserid"; // set
+
 
     const int DEFAULT_EXPIRE_TIME = 600; // seconds
 };

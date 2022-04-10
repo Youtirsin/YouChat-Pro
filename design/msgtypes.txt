@@ -1,4 +1,4 @@
-// 请求类型
+// 请求类型 old and abandoned, update later
 [
     // 注册 //////////////////
     {

@@ -1,33 +1,16 @@
 #include <bits/stdc++.h>
-#include <fstream>
-#include "jsoncpp/json/json.h"
+#include "sw/redis++/redis++.h"
 using namespace std;
 
 
-class A {
-public:
-    void setd(int dd) { d = dd; }
-
-    const int& getd() const { 
-        cout << &d << endl;
-        return d;
-    }
-private:
-    int d;
-};
-
-void test(const int& d) {
-    cout << d << endl;
-    cout << &d << endl;
-}
-
-
 int main() {
-    A a;
+    auto redis = sw::redis::Redis("tcp://127.0.0.1:6379");
+    
+    redis.hincrby("test", "id", 123);
 
-    a.setd(12);
+    auto res = redis.hget("test", "id");
 
-    test(a.getd());
+    cout << res.value() << endl;
 
     return 0;
 }

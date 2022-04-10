@@ -4,6 +4,7 @@
 #include "broadcastres.h"
 #include "deniedres.h"
 #include "fetchlistres.h"
+#include "fetchunreadres.h"
 #include "privateloadres.h"
 #include "privateres.h"
 #include "responsebase.h"

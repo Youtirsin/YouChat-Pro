@@ -1,20 +1,24 @@
 # 数据	
 	Memory
-		Conn { fd } // 用于fd的内容发送
+		Conn { fd } // 发送和接收相关的封装
 
-		<fd, Conn>
+		<fd, Conn> 由fd快速找到连接对象
 		
-		<user_id, fd>
+		<user_id, fd> 映射
 
-		users <fd, user_id>
+		<fd, user_id> 映射
 		
 	Redis
-		user_id_to_name user_id -> username // all
-
-		unread_from_{user1_id}_to_{user2_id} number
-
-		unread_broad_for_{user_id} number
-
+		userid -> Users // hash存储对象，缓存机制
+		
+		user_ids // set, 永久存储
+		
+		unread_private: user_id
+		{
+			0 : 15 // id 0 means broadcast
+			userid1: 1
+			userid2: 2
+		}
 		
 	Database tables
 	
@@ -28,13 +32,13 @@
 			user1_id
 			user2_id
 			msg
-			date
+			stamp
 		
 		broadcast
 			id
 			userid
 			msg
-			date
+			stamp
 
 
 # 流程
@@ -64,6 +68,3 @@
 
 断开连接
 - 清理Conn, fd, map
-
-
-# redis 同步用户名

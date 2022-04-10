@@ -53,7 +53,8 @@
         "cstring": "cpp",
         "map": "cpp",
         "list": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "unordered_set": "cpp"
     },
     "cmake.configureOnOpen": true,
     "cmake.installPrefix": "/home/youtirsin/mybin/rediscpp"

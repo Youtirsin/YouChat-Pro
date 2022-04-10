@@ -27,12 +27,6 @@ public:
 
     shared_ptr<User> getUserWithName(const string& username);
 
-    // string getPsd(const string& username);
-
-    // int getUserId(const string& username);
-
-    // string getUsername(int id);
-
     bool savePrivateMsg(int from_id, int to_id, const string& msg);
 
     bool saveBroadcastMsg(int from_id, const string& msg);
