@@ -17,8 +17,8 @@
 #include "clientconn.h"
 #include "request/request.h"
 #include "response/response.h"
-#include "dbapi.h"
-#include "redisapi.h"
+#include "dbapi/dbapi.h"
+#include "dbapi/redisapi.h"
 #include "myutil.h"
 
 using std::string;

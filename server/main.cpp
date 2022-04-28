@@ -3,9 +3,7 @@
 #include "server.h"
 #include "configfileloader.h"
 
-
 int main() {
-
     ConfigFileLoader loader;
     if (!loader.load("config.json")) {
         return -1;

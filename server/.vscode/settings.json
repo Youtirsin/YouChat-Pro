@@ -55,7 +55,5 @@
         "list": "cpp",
         "variant": "cpp",
         "unordered_set": "cpp"
-    },
-    "cmake.configureOnOpen": true,
-    "cmake.installPrefix": "/home/youtirsin/mybin/rediscpp"
+    }
 }
